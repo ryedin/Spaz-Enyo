@@ -22,7 +22,6 @@ enyo.kind({
 		entries: []
 	},
 	components: [
-<<<<<<< HEAD
 		{kind: "Toolbar", height: "42px", defaultKind: "Control", onclick: "scrollToTop", style: "min-height: 42px; color: white; color: white; padding-left: 5px;", components: [
 			//gotta do this to get the header title to center and not be a button. "defaultKind" in Toolbar is key.
 			{name: "topLeftButton", kind: "ToolButton", style: "display: none"},
@@ -31,22 +30,6 @@ enyo.kind({
 			{kind: "Spacer", flex: 1},
 			{name: "accountName", style: "color: grey; font-size: 12px; padding-left: 2px;"},
 			{name: "topRightButton", kind: "ToolButton", icon: "source/images/icon-close.png", onclick: "deleteClicked"}
-=======
-		{kind: "Toolbar", height: "42px", defaultKind: "Control", onclick: "scrollToTop", style: "min-height: 42px; color: white; color: white; padding-left: 5px;", 
-			onmousehold: "doToolbarmousehold",
-			onmouserelease: "doToolbarmouserelease",
-			ondragstart: "doToolbardragstart", 
-			ondrag: "doToolbardrag", 
-			ondragfinish: "doToolbardragfinish",
-			components: [
-				//gotta do this to get the header title to center and not be a button. "defaultKind" in Toolbar is key.
-				{name: "topLeftButton", kind: "ToolButton", style: "display: none"},
-				{name: "header", style: "padding: 0px 0px 5px 5px;", className: "truncating-text", content: ""},
-				{name: "unreadCount", /*style: "font-size: 12px; margin: 2px 0px 0px 4px; padding: 3px 4px 3px 6px;background-color: rgba(75, 153, 215, .7); -webkit-border-radius: 5px;",*/ align: "left", className: "unreadCountBadge", showing: false, onclick: "unreadClicked", content: "" },
-				{kind: "Spacer", flex: 1},
-				{name: "accountName", style: "color: grey; font-size: 12px; padding-left: 2px;"},
-				{name: "topRightButton", kind: "ToolButton", icon: "source/images/icon-close.png", onclick: "deleteClicked"}
->>>>>>> 447913e... Make sure the max-width for column titles is properly set
 		]},
 		{name: "list", kind: "Spaz.VirtualList", flex: 1, style: "background-color: #D8D8D8; margin: 0px 3px; min-height: 200px;", horizontal: false, className: "timeline list", onAcquirePage:'acquirePage', onSetupRow: "setupRow", components: [
 			{
