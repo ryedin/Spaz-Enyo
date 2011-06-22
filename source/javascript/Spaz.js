@@ -396,14 +396,12 @@ enyo.kind({
 		
 	},
 
-	"destroyEntryView": function(inSender, inEvent){
+	destroyEntryView: function(inSender, inEvent){
 		this.$.entryview.destroy();
 		if(inSender !== true){
 			this.viewEvents = [];
 		}
-
-		//this.render();
-		//this.$.container.refreshList();
+		this.$.container.resized();
 	},
 	
 	showUserView: function(inSender, inUsername, inService, inAccountId) {
@@ -429,13 +427,12 @@ enyo.kind({
 		this.$.userview.showUser(inUsername, inService, inAccountId);
 			
 	},
-	"destroyUserView": function(inSender, inEvent){
+	destroyUserView: function(inSender, inEvent){
 		this.$.userview.destroy();
 		if(inSender !== true){
 			this.viewEvents = [];
 		}
-		//this.render();
-		//this.$.container.refreshList();
+		this.$.container.resized();
 	},
 	viewEvents: [],
 	addViewEvent: function(inSender, inEvent){
