@@ -36,6 +36,9 @@ enyo.kind({
 		{name : "versionService", kind : "enyo.WebService", url: "http://getspaz.com/feeds/spazhd"}
 	],
 	
+	isRendered: false,
+	onRendered: [], // functions we will execute once everything is rendered
+	
 	twit: new SpazTwit(),
 	
 	windowParamsChangeHandler: function(inParams) {
@@ -94,7 +97,16 @@ enyo.kind({
 			 */
 			case 'prepPost':
 			case 'post':
-				AppUI.compose(inParams.msg, inParams.account);
+				
+				var postfunc = _.bind(function() {
+					AppUI.compose(inParams.msg, inParams.account);
+				}, this);
+				
+				if (this.isRendered === false) {
+					this.onRendered.push(postfunc);
+				} else {
+					postfunc();
+				}
 				break;
 
 			// /**
@@ -114,9 +126,17 @@ enyo.kind({
 			 *   account:"ACCOUNT_HASH",
 			 *   query:"spaz source:spaz"
 			 * }
-			 */			
-			case 'search':
-				AppUI.search(inParams.query, inParams.account);
+			 */
+			case 'search':				
+				var searchfunc = _.bind(function() {
+					AppUI.search(inParams.query, inParams.account);
+				}, this);
+				
+				if (this.isRendered === false) {
+					this.onRendered.push(searchfunc);
+				} else {
+					searchfunc();
+				}
 				break;
 
 			// /**
@@ -149,9 +169,17 @@ enyo.kind({
 			// 	// }
 			// 	break;
 			case 'bgcheck':
-				AppUI.refresh();
-				break;
 				
+				var refreshfunc = _.bind(function() {
+					AppUI.refresh();
+				}, this);
+				
+				if (this.isRendered === false) {
+					this.onRendered.push(refreshfunc);
+				} else {
+					refreshfunc();
+				}
+				break;
 			case 'relaunch':
 				// should have "from" param, we will parse in future
 				break;
@@ -371,6 +399,19 @@ enyo.kind({
 		
 		enyo.asyncMethod(this, this.sendVersionInfo);
 	},
+
+	// do some stuff after the components are rendered
+	rendered: function() {
+		this.inherited(arguments);
+		if (this.onRendered.length > 0) {
+			for (var i=0; i < this.onRendered.length; i++) {
+				this.onRendered[i].call();
+			}
+			this.onRendered = []; // clear each
+		}
+		this.isRendered = true; // so we don't try to bind stuff to onRendered again
+	},
+
 
 	showEntryView: function(inSender, inEntry){
 		enyo.log("showing entryView");
