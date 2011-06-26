@@ -3,7 +3,8 @@ enyo.kind({
 	kind: enyo.HFlexBox,
 	components: [
 		{kind: enyo.ApplicationEvents, onApplicationRelaunch: "relaunchHandler",
-			onWindowActivated:"windowActivated", onWindowDeactivated:"windowDeactivated"},
+			onWindowActivated:"windowActivated", onWindowDeactivated:"windowDeactivated",
+			onUnload:"unloaded"},
 		{
 			name: "sidebar", 
 			kind: "Spaz.Sidebar", 
@@ -24,7 +25,7 @@ enyo.kind({
 			onClose: "closeImageView"
 		},
 		{name: "dashboard", kind:"Dashboard", onTap: "dashboardTap", onIconTap: "iconTap", onMessageTap: "messageTap",
-					onUserClose: "dashboardClose", onLayerSwipe: "layerSwiped"},
+					onUserClose: "dashboardClose", onLayerSwipe: "layerSwiped", appId: null},
 		{name: "deleteEntryPopup", kind: "enyo.Popup", scrim : true, components: [
 			{content: enyo._$L("Delete Entry?")},
 			{style: "height: 10px;"},
@@ -38,6 +39,7 @@ enyo.kind({
 	
 	isRendered: false,
 	onRendered: [], // functions we will execute once everything is rendered
+	dashWin: null,
 	
 	twit: new SpazTwit(),
 	
@@ -62,6 +64,11 @@ enyo.kind({
 	
 	windowDeactivated: function() {
 		this.windowActive = false;
+	},
+	
+	// the window is closed
+	unloaded: function() {
+		this.$.dashboard.setLayers([]);
 	},
 
 	processLaunchParams: function(inParams) {
@@ -397,6 +404,8 @@ enyo.kind({
 		
 		this.processLaunchParams(enyo.windowParams);
 		
+		this.$.dashboard.appId = enyo.fetchAppInfo().id;
+		
 		enyo.asyncMethod(this, this.sendVersionInfo);
 	},
 
@@ -411,8 +420,7 @@ enyo.kind({
 		}
 		this.isRendered = true; // so we don't try to bind stuff to onRendered again
 	},
-
-
+	
 	showEntryView: function(inSender, inEntry){
 		enyo.log("showing entryView");
 		if(!this.$.entryview){
@@ -613,7 +621,7 @@ enyo.kind({
 	},
 	
 	dashboardTap: function(inSender, layer) {
-		AppUtils.relaunch('dashboard');
+		AppUtils.relaunch('dashboard', this.$.dashboard.appInfo);
 	},
 	messageTap: function(inSender, layer) {
 		enyo.log("Tapped on message: "+layer.text);
@@ -630,7 +638,7 @@ enyo.kind({
 
 
 	pushDashboard: function(inIcon, inTitle, inText) {
-		this.$.dashboard.push({icon:inIcon, title:inTitle, text:inText});
+		this.dashWin = this.$.dashboard.push({icon:inIcon, title:inTitle, text:inText});
 	},
 	popDashboard: function() {
 		this.$.dashboard.pop();
