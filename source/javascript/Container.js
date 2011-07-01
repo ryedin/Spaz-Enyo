@@ -122,7 +122,11 @@ enyo.kind({
 		this.saveColumnEntries();
 		this.createColumns();
 
+<<<<<<< HEAD
 		this.$.columnsScroller.snapTo(this.$.columnsScroller.getControls().length-2);
+=======
+		this.$.columnsScroller.snapTo(this.columnData.length-1);
+>>>>>>> b4e06b6ceeec770448ce70dfdbdad1bee55bdce6
 
 	},
 

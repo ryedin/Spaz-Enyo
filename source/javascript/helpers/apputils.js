@@ -490,7 +490,7 @@ AppUtils.convertToEntry = function(item) {
 
 			}
 			
-			if (entry.SC_is_search) {
+			if (item.SC_is_search) {
 				entry.is_search_result = true;
 			}
 			
@@ -519,8 +519,7 @@ AppUtils.setAdditionalEntryProperties = function(entries, account_id) {
 		var acc_username = App.Users.get(account_id).username;
 		var acc_service  = App.Users.get(account_id).type;
 		
-		if (entries[j].author_username && acc_username.toLowerCase() === entries[j].author_username.toLowerCase()
-			&& acc_service === entries[j].service) {
+		if (entries[j].author_username && acc_username.toLowerCase() === entries[j].author_username.toLowerCase() && acc_service === entries[j].service) {
 			entries[j].is_author = true;
 		}
 
