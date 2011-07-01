@@ -159,7 +159,6 @@ enyo.kind({
 				);
 			} else {
 				this.showOrHideConversation();
->>>>>>> b4e06b6ceeec770448ce70dfdbdad1bee55bdce6
 			}
 
 			if(this.entry.is_repost === true){
