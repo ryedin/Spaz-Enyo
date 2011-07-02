@@ -101,6 +101,7 @@ enyo.kind({
 				{kind: "ToolButton", name: "mention", disabled: false, icon: "source/images/icon-mention.png", onclick: "mention"},
 				{kind: "ToolButton", name: "message", disabled: false, icon: "source/images/icon-messages.png", onclick: "message"},
 				{kind: "ToolButton", name: "block", disabled: false, icon: "source/images/icon-block.png", onclick: "block"},
+				{kind: "ToolButton", name: "userSearch", disabled: false, icon: "source/images/icon-search.png", onclick: "userSearch"},
 				{kind: "Spacer"}
 			]},
 			
@@ -398,6 +399,9 @@ enyo.kind({
 	block: function(inSender, inEvent) {
 		this.$.confirmPopup.openAtCenter();
 	},
+	userSearch: function(inEvent) {
+		AppUI.search('@'+this.user.username + " OR from:"+ this.user.username, this.account_id);
+  	},
 	
 	confirmBlock: function(inSender) {
 		this.$.confirmPopup.close();
