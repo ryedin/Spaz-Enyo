@@ -392,7 +392,7 @@ enyo.kind({
 		AppUI.compose('@'+this.user.username+' ');
 	},
 	message: function(inSender, inEvent) {
-		AppUI.directMessage(this.user.username, this.account_id);
+		AppUI.directMessage(this.user.username, this.$.accountSelection.getValue());
 	},
 	
 	block: function(inSender, inEvent) {
