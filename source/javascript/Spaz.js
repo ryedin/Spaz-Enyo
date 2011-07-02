@@ -350,8 +350,8 @@ enyo.kind({
 
 		self.bindGlobalListeners();
 
-		AppUI.addFunction("viewUser", function(inUsername, inService, inAccountId){
-			this.showUserView(this, inUsername, inService, inAccountId);
+		AppUI.addFunction("viewUser", function(inUsername, inService, inAccountId, inColumnIndex){
+			this.showUserView(this, inUsername, inService, inAccountId, inColumnIndex);
 		}, this);
 		AppUI.addFunction("viewEntry", function(inEntry){
 			this.showEntryView(this, inEntry);
@@ -442,6 +442,17 @@ enyo.kind({
 			this.destroyUserView(true);
 		}
 		this.$.entryview.setEntry(inEntry);
+
+		if(inEntry.columnIndex){
+			var controls = this.$.container.$.columnsScroller.getControls();
+			for(var i = 0; i < controls.length; i++){
+				if(controls[i].name === "Column" + inEntry.columnIndex){
+					this.$.container.$.columnsScroller.snapTo(i);
+						//.next() looks better than snapTo, but we can't use it because if we are viewing an entry from the first column in view, it will hide it.
+					break;
+				}
+			}
+		}
 		
 	},
 
@@ -453,8 +464,7 @@ enyo.kind({
 		this.$.container.resized();
 	},
 	
-	showUserView: function(inSender, inUsername, inService, inAccountId) {
-		enyo.log("showing entryView");
+	showUserView: function(inSender, inUsername, inService, inAccountId, inColumnIndex) {
 		if(!this.$.userview){
 			this.createComponent(
 				{
@@ -474,6 +484,16 @@ enyo.kind({
 			this.destroyEntryView(true);
 		}
 		this.$.userview.showUser(inUsername, inService, inAccountId);
+
+		if(inColumnIndex){
+			var controls = this.$.container.$.columnsScroller.getControls();
+			for(var i = 0; i < controls.length; i++){
+				if(controls[i].name === "Column" + inColumnIndex){
+					this.$.container.$.columnsScroller.snapTo(i);
+					break;
+				}
+			}
+		}
 			
 	},
 	destroyUserView: function(inSender, inEvent){
