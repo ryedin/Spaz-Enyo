@@ -246,5 +246,9 @@ enyo.kind({
 			var col_idx = parseInt(control.name.replace('Column', ''), 10);
 			this.columnEntries[col_idx] = control.getEntries();
 		}));
+	},
+	
+	reclaimSpace: function() {
+		this.$.columnsScroller.snapTo(this.$.columnsScroller.getIndex());
 	}
 });
