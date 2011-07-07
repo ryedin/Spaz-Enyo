@@ -434,7 +434,7 @@ enyo.kind({
 			text = '@';
 		}
 		
-		this.$.postTextBox.setValue(text + "&nbsp;"); //add a space at the end.
+		this.$.postTextBox.setValue(text + " "); //add a space at the end.
 		this.$.postTextBox.forceFocus();
 		this.cursorToEnd();
 
