@@ -461,7 +461,7 @@ enyo.kind({
 		if(inSender !== true){
 			this.viewEvents = [];
 		}
-		this.$.container.resized();
+		this.$.container.reclaimSpace();
 	},
 	
 	showUserView: function(inSender, inUsername, inService, inAccountId, inColumnIndex) {
@@ -501,7 +501,7 @@ enyo.kind({
 		if(inSender !== true){
 			this.viewEvents = [];
 		}
-		this.$.container.resized();
+		this.$.container.reclaimSpace();
 	},
 	viewEvents: [],
 	addViewEvent: function(inSender, inEvent){
