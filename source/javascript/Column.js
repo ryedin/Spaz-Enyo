@@ -389,7 +389,7 @@ enyo.kind({
 			for(var i = 0; i < this.entries.length; i++){
 				if(this.entries[i].read === true){ //this is the first read entry
 					this.scrollOffset = (i > 0) ? (i-1): 0;
-					console.log("this.scrollOffset", this.scrollOffset);
+					//console.log("this.scrollOffset", this.scrollOffset);
 					break;
 				}
 			};	
@@ -456,12 +456,8 @@ enyo.kind({
 		}
 	},
 	
-	getColAttr: function() {
-		return {type: this.info.type, accounts: this.info.accounts, query: this.info.query };
-	},
-	
 	getHash: function() {
-		return sch.MD5(JSON.stringify(this.getColAttr()));
+		return sch.MD5(this.info.type + "_" + this.info.id);
 	},
 	
 	getLastRead: function() {
